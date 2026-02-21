@@ -1,0 +1,178 @@
+body {
+  background-color: #0a2a3d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: sans-serif;
+  color: white;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+#moves {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: #a8e6ef;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* The outer card container */
+.card {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  perspective: 600px; /* needed for 3D flip */
+}
+
+/* The inner part that actually flips */
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  border-radius: 12px;
+}
+
+/* When flipped, rotate the inner */
+.card.flipped .card-inner,
+.card.matched .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Both faces share this */
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  backface-visibility: hidden; /* hides the face when rotated away */
+}
+
+/* The face-down side */
+.card-back {
+  background-color: #1a7a8a;
+  border: 3px solid #2cb5c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+/* The face-up side */
+.card-front {
+  background-color: #f5e6c8;
+  border: 3px solid #f9d56e;
+  transform: rotateY(180deg); /* starts hidden */
+  background-size: cover;
+  background-position: center;
+}
+
+.card.matched .card-front {
+  border-color: #a8e6ef;
+  opacity: 0.75;
+}
+
+.card:not(.flipped):not(.matched):hover .card-inner {
+  transform: rotateY(15deg);
+}
+
+#restart {
+  padding: 10px 28px;
+  font-size: 1rem;
+  background-color: #2cb5c0;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#restart:hover {
+  background-color: #1a7a8a;
+}
+
+/* Win screen */
+#win-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 26, 45, 0.85);
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+#win-screen.show {
+  display: flex;
+}
+
+#win-card {
+  background: #0e4d6e;
+  border: 2px solid #2cb5c0;
+  border-radius: 24px;
+  padding: 40px 48px;
+  text-align: center;
+}
+
+#win-emoji {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  animation: wiggle 1s ease infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+
+#win-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+#win-msg {
+  color: #a8e6ef;
+  margin-bottom: 24px;
+}
+
+#play-again {
+  padding: 10px 28px;
+  font-size: 1rem;
+  background-color: #2cb5c0;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+#play-again:hover {
+  background-color: #1a7a8a;
+}
+
+/* Confetti pieces */
+.confetti-piece {
+  position: fixed;
+  top: -20px;
+  font-size: 1.5rem;
+  pointer-events: none;
+  animation: confetti-fall linear forwards;
+  z-index: 999;
+}
+
+@keyframes confetti-fall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
